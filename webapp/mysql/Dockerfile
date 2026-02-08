@@ -1,2 +1,2 @@
 FROM mysql:8.4
-RUN apt-get update && apt-get install -y --no-install-recommends procps && rm -rf /var/lib/apt/lists/*
+RUN microdnf install -y procps-ng && microdnf clean all
