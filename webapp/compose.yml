@@ -37,7 +37,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1"
+          cpus: "2"
           memory: 1g
 
   mysql:
@@ -50,6 +50,8 @@ services:
     volumes:
       - mysql:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
+      - ./etc/mysql:/etc/mysql/conf.d
+      - ./logs/mysql:/var/log
     ports:
       - "3306:3306"
     networks:
@@ -57,7 +59,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1"
+          cpus: "2"
           memory: 1g
 
   memcached:
