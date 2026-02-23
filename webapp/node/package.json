@@ -8,18 +8,19 @@
     "start": "node dist/app.js"
   },
   "dependencies": {
-    "memcached": "^2.2.2",
+    "@hono/node-server": "^1.19.9",
     "ejs": "^4.0.1",
-    "multer": "^2.0.2",
-    "mysql2": "^3.16.3",
     "hono": "^4.11.8",
-    "@hono/node-server": "^1.19.9"
+    "memcached": "^2.2.2",
+    "multer": "^2.0.2",
+    "mysql2": "^3.16.3"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.4",
     "@types/ejs": "^3.1.5",
     "@types/memcached": "^2.2.10",
+    "@types/node": "^24.10.12",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.9.3",
-    "@types/node": "^24.10.12"
+    "typescript": "^5.9.3"
   }
 }
