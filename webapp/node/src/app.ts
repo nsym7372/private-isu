@@ -14,8 +14,22 @@ import crypto from 'crypto'
 import { spawnSync } from 'child_process'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import cluster from 'node:cluster'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+const NUM_WORKERS = 4
+
+if (cluster.isPrimary) {
+	console.log(`Primary ${process.pid} starting ${NUM_WORKERS} workers`)
+	for (let i = 0; i < NUM_WORKERS; i++) {
+		cluster.fork()
+	}
+	cluster.on('exit', (worker) => {
+		console.log(`Worker ${worker.process.pid} exited, restarting`)
+		cluster.fork()
+	})
+}
 
 type Variables = {
 	session: SessionData
@@ -38,7 +52,7 @@ const db: Pool = createPool({
 	user: process.env.ISUCONP_DB_USER || 'root',
 	password: process.env.ISUCONP_DB_PASSWORD,
 	database: process.env.ISUCONP_DB_NAME || 'isuconp',
-	connectionLimit: 1,
+	connectionLimit: 4,
 	charset: 'utf8mb4',
 })
 
@@ -711,6 +725,8 @@ app.post('/admin/banned', async (c: AppContext) => {
 
 app.use('/*', serveStatic({ root: '../public' }))
 
-serve({ fetch: app.fetch, port: 8080 }, (info: { port: number }) => {
-	console.log(`server started on ${info.port}`)
-})
+if (cluster.isWorker) {
+	serve({ fetch: app.fetch, port: 8080 }, (info: { port: number }) => {
+		console.log(`server started on ${info.port}`)
+	})
+}

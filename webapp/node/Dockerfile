@@ -4,7 +4,7 @@ FROM node:24-slim
 RUN \
   --mount=type=cache,target=/var/lib/apt,sharing=locked \
   --mount=type=cache,target=/var/cache/apt,sharing=locked \
-  apt-get update -qq && apt-get install -y build-essential default-libmysqlclient-dev openssl \
+  apt-get update -qq && apt-get install -y build-essential default-libmysqlclient-dev openssl procps dstat \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/webapp
