@@ -26,7 +26,7 @@ FROM debian:bookworm-slim AS final
 RUN \
   --mount=type=cache,target=/var/lib/apt,sharing=locked \
   --mount=type=cache,target=/var/cache/apt,sharing=locked \
-  apt-get update -qq && apt-get install -y openssl
+  apt-get update -qq && apt-get install -y openssl procps
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/

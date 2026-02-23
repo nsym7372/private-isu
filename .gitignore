@@ -19,3 +19,4 @@ portal/tmp
 
 # 
 webapp/logs/*
+/misc
